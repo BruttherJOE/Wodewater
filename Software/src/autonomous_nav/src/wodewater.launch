@@ -1,0 +1,21 @@
+<launch>
+<!-- ======== settings at the top ========== -->
+<arg name="map_file" default="$(find autonomous_nav)src/map4.yaml"/>
+<!-- =========================================================== -->
+
+<!-- start kobuki -->
+    <include file="$(find turtlebot_bringup)/launch/minimal.launch" >
+    </include>
+
+<!-- launch map server -->
+    <node name="mapServer" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+<!-- launch amcl -->
+    <include file="$(find rplidar_ros)/launch/amcl.launch" >
+    </include>
+
+<!-- set init position of robot -->
+    <node pkg="autonomous_nav" name="SetInitPose" type="set_init_pose.py" output="screen" > 
+</node>
+
+</launch>
